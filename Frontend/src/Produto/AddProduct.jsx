@@ -9,15 +9,13 @@ const AddProduct = ({ handleAddProduct }) => {
     let navigate = useNavigate();
 
     
-    const [formError, setFormError] = useState("");
-
-    const {categories, loadCategories, error, loading, } = useFetchCategories()
+    const {categories, loadCategories} = useFetchCategories()
     
     const {nome,setNome,
-           preco,setPreco,
+           preco,setPreco, loading,
            qtd,setQtd, insertProduct,
-           setCategorySelected,
-           setFileStorage,
+           setCategorySelected, errorUpload,
+           setFileStorage, error,
            setIsImageAdded} = useAddProducts()
 
 
@@ -34,20 +32,13 @@ const AddProduct = ({ handleAddProduct }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        setFormError('')
 
-        try {
-            const productResponse = await insertProduct()
+        const responseProduct = await insertProduct()
 
-            if (productResponse !== undefined) {
-                handleAddProduct(productResponse);
-                navigate('/')
-        }
-    } catch (error) {
+        handleAddProduct(responseProduct)
+        navigate('/')
 
-            setFormError('Error submiting product, please try later')
-        
-        }       
+
     };
 
 
@@ -132,18 +123,18 @@ const AddProduct = ({ handleAddProduct }) => {
                         <Upload onImageUpload={handleImageUpload} />
                        
                         {!loading && 
-                        (<button type='submit' className='btn btn-outline-primary'>
+                        (<button className='btn btn-outline-primary'>
                             Submit
                         </button>) }
                         
                         {loading && 
-                        (<button disabled type='submit' className='btn btn-outline-primary'>
+                        (<button   className='btn btn-outline-primary'disabled >
                             Wait...
                         </button>) }
                         
-                        <Link className='btn btn-outline-danger mx-2' to='/'>
+                        {!loading && (<Link className='btn btn-outline-danger mx-2' to='/'>
                             Cancel
-                        </Link>
+                        </Link>)}
                         
                         {error && (
                              <div className='alert alert-danger' role='alert'> 
@@ -151,9 +142,9 @@ const AddProduct = ({ handleAddProduct }) => {
                         </div>
                         )}
                        
-                        {formError && 
+                        {errorUpload && 
                         (  <div className='alert alert-danger' role='alert'> 
-                            {formError}
+                            {errorUpload}
                         </div>) }
                     </form>
                 </div>

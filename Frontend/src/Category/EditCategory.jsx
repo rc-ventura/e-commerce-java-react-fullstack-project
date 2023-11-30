@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom"
 import ModalMenu from "../Components/ModalMenu/ModalMenu"
 import { useEffect } from "react"
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import { useFetchCategories } from "../hooks/useFetchCategories"
+import { useEditCategories } from "../hooks/useEditCategories"
 
 export default function EditCategory ({ show, setShow})  {
 
@@ -12,7 +12,8 @@ export default function EditCategory ({ show, setShow})  {
     let navigate = useNavigate()
 
     const {currentCategory, setCurrentCategory, loadCategoryId} = useFetchCategories(id)
-    
+    const {updateCategory, error, loading} = useEditCategories(id)
+
     useEffect(() => {
        
         loadCategoryId();
@@ -27,19 +28,11 @@ export default function EditCategory ({ show, setShow})  {
     const onSubmitUpdate = async (e) => {
         e.preventDefault()
 
-            try {
-
-          await axios.put(`http://localhost:8080/categorias/${id}`, currentCategory)
+       await updateCategory(currentCategory)
+        
+        navigate('/addCategory')
   
-  
-          alert("Update Category Success");
-          navigate('/addCategory')
-  
-      } catch (error) {
-        console.error('Error updating category', error)
-        alert("Error updating category");
-
-      }
+      
     }
    
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect } from 'react'
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useFetchCategories } from '../hooks/useFetchCategories';
 import { useDeleteCategories } from '../hooks/useDeleteCategories';
+import { useAddCategories } from '../hooks/useAddCategories';
 
 export default function AddCategory({setShow}) {
 
@@ -16,6 +16,7 @@ export default function AddCategory({setShow}) {
 
     const {deleteCategories} = useDeleteCategories()
 
+    const {insertCategory} = useAddCategories()
 
     const onInputChange = (e) => {
         setCategory((prevCategory) => ({
@@ -30,19 +31,15 @@ export default function AddCategory({setShow}) {
         loadCategories();
 
 
-    }, []);
+    }, [category]);
 
-    
 
     const onSubmit = async (e) => {
 
         e.preventDefault()
 
-        await axios.post("http://localhost:8080/categorias/", category)
-
-        setCategory({ nome: '' });
-
-        alert("Submiting Category Success");
+       insertCategory(category) 
+        setCategory({nome:''});
 
     };
 
@@ -56,7 +53,6 @@ export default function AddCategory({setShow}) {
     const handleModal = (id) => {
 
         const categoriesId = Number(id)
-
          setShow(true)
         
          navigate(`/editCategory/${categoriesId}`)
@@ -64,7 +60,6 @@ export default function AddCategory({setShow}) {
 
     }
     
-
     return (
         
         <div className='container text-center'>

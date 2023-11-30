@@ -15,7 +15,7 @@ export const useAddProducts = () => {
 
     const [cancelled, setCancelled] = useState(false);
     const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(null);
+    const [loading, setLoading] = useState(false);
 
 
 
@@ -29,17 +29,14 @@ export const useAddProducts = () => {
     
         checkIfIsCancelled()
 
-
     if (!isImageAdded) {
 
         setErrorUpload('Please, upload an image!')
         console.log(errorUpload)
         return
     }
-
-
-    
-    setLoading(true);
+        setLoading(true);
+        
 
 
     try {
@@ -52,15 +49,13 @@ export const useAddProducts = () => {
 
 
     } catch (error) {
-        console.error('Error submitting product', error);
+        console.error('Error submitting product.', error);
         setError(error.message)
 
-        setLoading(false)
 
-
-        return (error)
     }
 
+    setLoading(false)
 
 };
 
@@ -94,6 +89,7 @@ export const useAddProducts = () => {
         return {
             insertProduct,
             error,
+            setLoading,
             loading,
             nome,
             setNome,
@@ -107,7 +103,7 @@ export const useAddProducts = () => {
             setFileStorage,
             isImageAdded,
             setIsImageAdded,
-            errorUpload
+            errorUpload,
 
 
         }

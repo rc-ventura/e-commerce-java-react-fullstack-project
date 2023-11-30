@@ -24,7 +24,7 @@ export default function DashBoard() {
 
     return (
         <div className='container'>
-            <div className='py-4'>
+            <div className='py-5 '>
                 {!loading &&   (
                 <table className="table text-center border shadow ">
                     <thead>

@@ -7,6 +7,7 @@ import './Product.css'
 import Upload from '../Components/Upload/Upload'
 import { useFetchProducts } from '../hooks/useFetchProducts';
 import { useFetchCategories } from '../hooks/useFetchCategories';
+import { useEditProducts } from '../hooks/useEditProducts';
 
 
 export default function EditProduct () {
@@ -19,6 +20,8 @@ const {id} = useParams();
 
 const [fileStorageUpdate, setFileStorageUpdate] = useState({});
 const [categoryUpdated, setCategoryUpdated] = useState('')
+
+const {updateProduct, imageUpdate, isImageAdded, setIsImageAdded} = useEditProducts(id)
 
 const {loadProductsId, error, loading, product, setProduct} = useFetchProducts(id)
 const {categories, loadCategories} = useFetchCategories()
@@ -40,44 +43,40 @@ useEffect(()=>{
 
 []);
 
+const createProductUpdate = () => {
+
+        const productDataUpdate = {
+            nome,
+            preco,
+            categoria: categoryUpdated.id ? { 
+                id: categoryUpdated.id,
+                nome: categoryUpdated.nome,
+            }
+            : product.categoria,
+            qtd,
+            fileStorage: fileStorageUpdate.id ? {
+                id: fileStorageUpdate.id, 
+                name: fileStorageUpdate.name,
+                data: fileStorageUpdate.data,
+                size: fileStorageUpdate.size,
+                type: fileStorageUpdate.type,
+            }
+            : product.fileStorage,
+        }
+
+        return productDataUpdate
+}
+
 
 const onSubmit= async (e)=> {
     e.preventDefault();
      
+    const productData = createProductUpdate()
 
-try {
-
-    const productData = {
-        nome,
-        preco,
-        categoria: categoryUpdated.id ? { 
-            id: categoryUpdated.id,
-            nome: categoryUpdated.nome,
-        }
-        : product.categoria,
-        qtd,
-        fileStorage: fileStorageUpdate.id ? {
-            id: fileStorageUpdate.id, 
-            name: fileStorageUpdate.name,
-            data: fileStorageUpdate.data,
-            size: fileStorageUpdate.size,
-            type: fileStorageUpdate.type,
-        }
-        : product.fileStorage,
-    }
-
-
-    await axios.put(`http://localhost:8080/produtos/${id}`, productData);
-
+    await updateProduct(productData)
 
     navigate('/');
-    alert('Produto editado com sucesso');
 
-} catch (error) {
-
-    console.error('Error Edit product', error);
-    alert('Error Edit product. Please try again');
-}
 };
 
 
@@ -90,8 +89,8 @@ const handleCategoryChange = (e) => {
     setProduct({
         ...product,
         categoria: {
-            id: selectedCategoryId,
-            nome: selectedCategory.nome,
+            id: selectedCategoryId ? selectedCategory.id : null,
+            nome: selectedCategory.nome ? selectedCategory.nome : null,
         }
     })
 }
@@ -99,26 +98,13 @@ const handleCategoryChange = (e) => {
 const handleImageUpload = async (imageFile) => {
 
     setFileStorageUpdate(imageFile)
+    setIsImageAdded(true)
 
     const formDataImage = new FormData()
     formDataImage.append('file',  [fileStorageUpdate.data])
-       
+    
+    imageUpdate(formDataImage)
 
-    try {
-
-        await axios.put(
-       `http://localhost:8080/produtos/${id}/addFiles/${product.fileStorage.id}`, formDataImage, {
-       // Configuração da requisição
-   
-           headers: {
-               'Content-Type': 'multipart/form-data'
-           },
-       }
-   );
-       
-} catch (error) {
-    console.error(error)
-}
 
 }
 

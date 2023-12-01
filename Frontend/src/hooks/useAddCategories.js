@@ -12,6 +12,7 @@ export const useAddCategories = () => {
     const [cancelled, setCancelled] = useState(false);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    
 
     function checkIfIsCancelled() {
         if (cancelled) {

@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom"
 import ModalMenu from "../Components/ModalMenu/ModalMenu"
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { useFetchCategories } from "../hooks/useFetchCategories"
-import { useEditCategories } from "../hooks/useEditCategories"
+import { useFetchCategories } from "../Hooks/useFetchCategories"
+import { useEditCategories } from "../Hooks/useEditCategories"
 
 export default function EditCategory ({ show, setShow})  {
 

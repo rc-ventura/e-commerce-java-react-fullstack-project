@@ -1,11 +1,21 @@
 import React from 'react'
 import { useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { useFetchCategories } from '../hooks/useFetchCategories';
-import { useDeleteCategories } from '../hooks/useDeleteCategories';
-import { useAddCategories } from '../hooks/useAddCategories';
+import { useFetchCategories } from '../Hooks/useFetchCategories';
+import { useDeleteCategories } from '../Hooks/useDeleteCategories';
+import { useAddCategories } from '../Hooks/useAddCategories';
+import SnackBar from '../Components/Alerts/SnackBar';
 
-export default function AddCategory({setShow}) {
+export default function AddCategory({
+    setShow, 
+    setDeleteMessage, 
+    deleteMessage,
+    setEditMessage,
+    editMessage,
+    successMessage,
+    setSuccessMessage
+
+    }) {
 
     let navigate = useNavigate()
 
@@ -23,13 +33,11 @@ export default function AddCategory({setShow}) {
             ...prevCategory,
             [e.target.name]: e.target.value
         }));
-
-
     };
 
     useEffect(() => {
+        
         loadCategories();
-
 
     }, [category]);
 
@@ -38,13 +46,17 @@ export default function AddCategory({setShow}) {
 
         e.preventDefault()
 
+        setSuccessMessage(true)
+
        insertCategory(category) 
         setCategory({nome:''});
 
     };
 
     const handleDelete = async (id) => {
-       
+        
+        setDeleteMessage(true)
+        
         await deleteCategories(id)
         loadCategories()
     }
@@ -53,7 +65,9 @@ export default function AddCategory({setShow}) {
     const handleModal = (id) => {
 
         const categoriesId = Number(id)
-         setShow(true)
+         
+        setEditMessage(true)
+        setShow(true)
         
          navigate(`/editCategory/${categoriesId}`)
 
@@ -141,17 +155,33 @@ export default function AddCategory({setShow}) {
                         </table>
                     </div> 
                 </div> 
-                )}
-                            
+                )}      
                     {loading && (
                     <div className='alert alert-warning m-4' role='alert'> 
-                    Loading... Please wait just time !!!
-           </div> 
+                    Loading... Please wait just time !!!</div> 
            )}
                       {error && (
-                      <div className='alert alert-danger m-4' role='alert'>{error}</div>)}
-                </div>
+                      <div className='alert alert-danger m-4' role='alert'>{error}</div>
+                      )}
+                            
+                {deleteMessage && (
+                            <SnackBar 
+                            handleDeleteMessage={setDeleteMessage} 
+                            message='success'>Category deleted successfully</SnackBar>
+                        )} 
+
+                {successMessage && (
+                            <SnackBar 
+                            handleSuccessMessage={setSuccessMessage} 
+                            message='success'>Product added successfully</SnackBar>
+                        )} 
+                {editMessage && (
+                            <SnackBar 
+                            handleEditMessage={setEditMessage} 
+                            message='success'>Product edited successfully</SnackBar>
+                        )} 
                 
+                </div>
             </div>
         </div>
 

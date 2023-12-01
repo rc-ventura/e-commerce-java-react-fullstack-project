@@ -9,9 +9,7 @@ export const useAddProducts = () => {
     const [qtd, setQtd] = useState('');
     const [categorySelected, setCategorySelected] = useState(null);
     const [fileStorage, setFileStorage] = useState({});
-    const [isImageAdded, setIsImageAdded] = useState (false)
-    const [errorUpload, setErrorUpload] = useState(null);
-
+    
 
     const [cancelled, setCancelled] = useState(false);
     const [error, setError] = useState(null);
@@ -29,16 +27,8 @@ export const useAddProducts = () => {
     
         checkIfIsCancelled()
 
-    if (!isImageAdded) {
-
-        setErrorUpload('Please, upload an image!')
-        console.log(errorUpload)
-        return
-    }
         setLoading(true);
         
-
-
     try {
 
         const productData = createProduct()
@@ -101,9 +91,6 @@ export const useAddProducts = () => {
             setCategorySelected,
             fileStorage,
             setFileStorage,
-            isImageAdded,
-            setIsImageAdded,
-            errorUpload,
 
 
         }

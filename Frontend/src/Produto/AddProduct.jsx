@@ -1,29 +1,35 @@
 import {useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Upload from '../Components/Upload/Upload';
-import { useFetchCategories } from '../hooks/useFetchCategories';
-import { useAddProducts } from '../hooks/useAddProducts';
+import { useFetchCategories } from '../Hooks/useFetchCategories';
+import { useAddProducts } from '../Hooks/useAddProducts';
+import SnackBar from '../Components/Alerts/SnackBar';
 
-const AddProduct = ({ handleAddProduct }) => {
+
+const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
     
     let navigate = useNavigate();
 
-    
+    const [isImageAdded, setIsImageAdded] = useState (false)
+    const [errorUpload, setErrorUpload] = useState(false);
+    const [isError, setIsError] = useState(false);
+
     const {categories, loadCategories} = useFetchCategories()
-    
+
     const {nome,setNome,
            preco,setPreco, loading,
            qtd,setQtd, insertProduct,
-           setCategorySelected, errorUpload,
+           setCategorySelected,
            setFileStorage, error,
-           setIsImageAdded} = useAddProducts()
+           } = useAddProducts()
 
 
     useEffect(() => {
         
         loadCategories()
+        
     }, []);
-    
+
 
     const handleImageUpload = (imageData) => {
         setFileStorage(imageData);
@@ -32,14 +38,27 @@ const AddProduct = ({ handleAddProduct }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        
+        if (!isImageAdded) {
+            setErrorUpload('Please, upload an image!')
+            setIsError(true)
+        
+        } else {
 
-        const responseProduct = await insertProduct()
+            setSuccessMessage(true)
 
-        handleAddProduct(responseProduct)
-        navigate('/')
+            const responseProduct = await insertProduct()
 
+            handleAddProduct(responseProduct)
+
+            navigate('/')
+        }
+
+        
 
     };
+
+    
 
 
     return (
@@ -123,34 +142,39 @@ const AddProduct = ({ handleAddProduct }) => {
                         <Upload onImageUpload={handleImageUpload} />
                        
                         {!loading && 
-                        (<button className='btn btn-outline-primary'>
+                        (<button className='btn btn-outline-primary py-2 mx-2 '>
                             Submit
                         </button>) }
                         
                         {loading && 
-                        (<button   className='btn btn-outline-primary'disabled >
+                        (<button   className='btn btn-outline-primary py-2 mx-2'disabled >
                             Wait...
                         </button>) }
                         
-                        {!loading && (<Link className='btn btn-outline-danger mx-2' to='/'>
+                        {!loading && (<Link className='btn btn-outline-danger py-2 mx-2' to='/'>
                             Cancel
                         </Link>)}
                         
                         {error && (
-                             <div className='alert alert-danger' role='alert'> 
-                            {error}
-                        </div>
+                             <SnackBar   message='danger'>{error}</SnackBar> 
                         )}
                        
-                        {errorUpload && 
-                        (  <div className='alert alert-danger' role='alert'> 
-                            {errorUpload}
-                        </div>) }
+                        {isError && 
+                        (<SnackBar handleErrorUpload={setIsError}   message='danger'>{errorUpload}</SnackBar>
+                        ) }
+                        
+                        
                     </form>
+                    
                 </div>
+              
             </div>
+            
         </div>
+        
+        
     );
+    
 };
 
 export default AddProduct;

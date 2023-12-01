@@ -1,13 +1,23 @@
 import {useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { useFetchProducts } from '../../hooks/useFetchProducts';
-import { useDeleteProducts } from '../../hooks/useDeleteProducts';
+import { useFetchProducts } from '../../Hooks/useFetchProducts';
+import { useDeleteProducts } from '../../Hooks/useDeleteProducts';
+import SnackBar from '../../Components/Alerts/SnackBar';
 
-export default function DashBoard() {
+export default function DashBoard({
+     successMessage,
+     setSuccessMessage,
+     setEditMessage,
+     editMessage,
+     deleteMessage,
+     setDeleteMessage,
+
+    }) {
 
     
     const {products, loadProducts, error, loading,} = useFetchProducts()
     const {deleteProducts} = useDeleteProducts()
+    
     
     useEffect(()=> {
       
@@ -17,6 +27,7 @@ export default function DashBoard() {
 
 
     const handleDelete = async (id) => {
+        setDeleteMessage(true)
        
         await deleteProducts(id)
         loadProducts()
@@ -43,13 +54,13 @@ export default function DashBoard() {
                         {products.map((item, index) => (
                             
                             <tr key={item.id}>
-                                <th scope="row">{index + 1}</th>
+                                <th scope="row ">{index + 1}</th>
                                 <td>
                                     {item.fileStorage && item.fileStorage.data && (
                                         <img
                                             src={`data:${item.fileStorage.type};base64,${item.fileStorage.data}`}
-                                            width='100'
-                                            height='80'
+                                            width='50'
+                                            height='50'
                                             alt='logo'
                                         />
                                         
@@ -80,7 +91,21 @@ export default function DashBoard() {
                     </div>
                 ) }
                 {error && <div className='alert alert-danger' role='alert'> {error} </div>}
-                    
+                {successMessage && (
+                            <SnackBar 
+                            handleSuccessMessage={setSuccessMessage} 
+                            message='success'>Product added successfully</SnackBar>
+                        )} 
+                {editMessage && (
+                            <SnackBar 
+                            handleEditMessage={setEditMessage} 
+                            message='success'>Product edited successfully</SnackBar>
+                        )} 
+                {deleteMessage && (
+                            <SnackBar 
+                            handleDeleteMessage={setDeleteMessage} 
+                            message='success'>Product deleted successfully</SnackBar>
+                        )} 
             </div>
         </div>
     );

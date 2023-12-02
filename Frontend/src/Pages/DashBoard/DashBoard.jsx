@@ -34,8 +34,10 @@ export default function DashBoard({
     }
 
     return (
+        <div>
+        <h1 className='text-center m-4'>My Dashboard</h1>
         <div className='container'>
-            <div className='py-5 '>
+            <div className='py-3 '>
                 {!loading &&   (
                 <table className="table text-center border shadow ">
                     <thead>
@@ -107,6 +109,7 @@ export default function DashBoard({
                             message='success'>Product deleted successfully</SnackBar>
                         )} 
             </div>
+        </div>
         </div>
     );
 }

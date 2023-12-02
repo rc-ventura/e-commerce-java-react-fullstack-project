@@ -1,4 +1,3 @@
-import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditProduct from "./Produto/EditProduct ";
 import ViewProduct from "./Produto/ViewProduct";
@@ -8,6 +7,8 @@ import AddProduct from "./Produto/AddProduct";
 import EditCategory from "./Category/EditCategory";
 import DashBoard from "./Pages/DashBoard/DashBoard";
 import Home from "./Pages/Home/Home";
+import NavMenu from "./Components/NavMenu/NavMenu";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
 
@@ -24,7 +25,6 @@ function App() {
 
   }
 
-  
 
   return (
   
@@ -32,10 +32,10 @@ function App() {
       <Router>
        
         
-        <Navbar />
+        <NavMenu />
 
         <Routes>
-          <Route exact path='/'
+          <Route exact path='/dashboard'
            element={<DashBoard
                    setSuccessMessage={setSuccessMessage} 
                    successMessage={successMessage}
@@ -44,10 +44,13 @@ function App() {
                    setDeleteMessage={setDeleteMessage}
                    deleteMessage={deleteMessage}
                    />} />
-
+  
           <Route exact path="/addproduct" element={<AddProduct setSuccessMessage={setSuccessMessage} handleAddProduct={product =>SendProducts(product)}  />} />
           <Route exact path="/editProduct/:id" element={<EditProduct setEditMessage={setEditMessage} />}/>
           <Route exact path="/viewProduct/:id" element={<ViewProduct/>}/>
+          
+          {/* <Route exact path="/viewCategory/:id" element={<ViewProduct/>}/> */}
+
           
           <Route exact path="/addCategory" 
           element={
@@ -65,7 +68,6 @@ function App() {
           <Route exact path="/editCategory/:id" element={<EditCategory show={show} setShow={setShow}/>}/>
           
         </Routes>
-
       </Router>
     </div>
 

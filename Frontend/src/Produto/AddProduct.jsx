@@ -1,33 +1,33 @@
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Upload from '../Components/Upload/Upload';
 import { useFetchCategories } from '../Hooks/useFetchCategories';
 import { useAddProducts } from '../Hooks/useAddProducts';
 import SnackBar from '../Components/Alerts/SnackBar';
+import  './Product.css'
 
+const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
 
-const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
-    
     let navigate = useNavigate();
 
-    const [isImageAdded, setIsImageAdded] = useState (false)
+    const [isImageAdded, setIsImageAdded] = useState(false)
     const [errorUpload, setErrorUpload] = useState(false);
     const [isError, setIsError] = useState(false);
 
-    const {categories, loadCategories} = useFetchCategories()
+    const { categories, loadCategories } = useFetchCategories()
 
-    const {nome,setNome,
-           preco,setPreco, loading,
-           qtd,setQtd, insertProduct,
-           setCategorySelected,
-           setFileStorage, error,
-           } = useAddProducts()
+    const { nome, setNome,
+        preco, setPreco, loading,
+        qtd, setQtd, insertProduct,
+        setCategorySelected,
+        setFileStorage, error,
+    } = useAddProducts()
 
 
     useEffect(() => {
-        
+
         loadCategories()
-        
+
     }, []);
 
 
@@ -38,11 +38,11 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!isImageAdded) {
             setErrorUpload('Please, upload an image!')
             setIsError(true)
-        
+
         } else {
 
             setSuccessMessage(true)
@@ -53,23 +53,17 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
 
             navigate('/')
         }
-
-        
-
-    };
-
-    
-
+    }
 
     return (
-        <div className='container text-center'>
-            <div className='row'>
+        <div className='container d-flex justify-content-center aligh-items-center vh-80'>
+            {/* <div className='row'> */}
                 <div className='col-md-6 offset md-3 border rounded p-1 mt-2 shadow'>
                     <h2 className='text-center m-3'> Register Product</h2>
                     <br />
 
                     <form onSubmit={onSubmit}>
-                        <div className='mb-2'>
+                        <div className='mb-3'>
                             <label htmlFor='name' className='form-label'>
                                 <strong>Name</strong>
                             </label>
@@ -83,7 +77,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
                                 onChange={(e) => setNome(e.target.value)}
                             />
                         </div>
-                        <div className='mb-2'>
+                        <div className='mb-3'>
                             <label htmlFor='price' className='form-label'>
                                 <strong>Price</strong>
                             </label>
@@ -97,7 +91,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
                                 onChange={(e) => setPreco(e.target.value)}
                             />
                         </div>
-                        <div className='mb-2'>
+                        <div className='mb-1'>
                             <label htmlFor='qtd' className='form-label'>
                                 <strong>Quantity</strong>
                             </label>
@@ -138,43 +132,47 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage  }) => {
                                 ))}
                             </select>
                         </div>
-
+                        
                         <Upload onImageUpload={handleImageUpload} />
-                       
-                        {!loading && 
-                        (<button className='btn btn-outline-primary py-2 mx-2 '>
-                            Submit
-                        </button>) }
-                        
-                        {loading && 
-                        (<button   className='btn btn-outline-primary py-2 mx-2'disabled >
-                            Wait...
-                        </button>) }
-                        
-                        {!loading && (<Link className='btn btn-outline-danger py-2 mx-2' to='/'>
+
+                        <div className= 'd-flex justify-content-between '>
+                        {!loading &&
+                            (<button className='btn btn-outline-primary py-2 btn-small  '>
+                                Submit
+                            </button>)}
+
+                        {loading &&
+                            (<button className='btn btn-outline-primary py-2 btn-small' disabled >
+                                Wait...
+                            </button>)}
+                            
+
+                        {!loading && (<Link className='btn btn-outline-danger  py-2 btn-small' to='/'>
                             Cancel
                         </Link>)}
-                        
+
+                         </div> 
+
                         {error && (
-                             <SnackBar   message='danger'>{error}</SnackBar> 
+                            <SnackBar message='danger'>{error}</SnackBar>
                         )}
-                       
-                        {isError && 
-                        (<SnackBar handleErrorUpload={setIsError}   message='danger'>{errorUpload}</SnackBar>
-                        ) }
-                        
-                        
+
+                        {isError &&
+                            (<SnackBar handleErrorUpload={setIsError} message='danger'>{errorUpload}</SnackBar>
+                            )}
+
+
                     </form>
-                    
+
                 </div>
-              
+
             </div>
-            
-        </div>
-        
-        
+
+        // </div>
+
+
     );
-    
+
 };
 
 export default AddProduct;

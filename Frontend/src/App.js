@@ -1,4 +1,3 @@
-import Navbar from "./Components/Navbar/Navbar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EditProduct from "./Produto/EditProduct ";
 import ViewProduct from "./Produto/ViewProduct";
@@ -8,8 +7,15 @@ import AddProduct from "./Produto/AddProduct";
 import EditCategory from "./Category/EditCategory";
 import DashBoard from "./Pages/DashBoard/DashBoard";
 import Home from "./Pages/Home/Home";
+import NavMenu from "./Components/NavMenu/NavMenu";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
+
+  const [show, setShow] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(false)
+  const [editMessage, setEditMessage] = useState(false)
+  const [deleteMessage, setDeleteMessage] = useState(false)
 
   const [products, setProducts] = useState([]);
 
@@ -19,9 +25,6 @@ function App() {
 
   }
 
-  const [show, setShow] = useState(false)
-
-  
 
   return (
   
@@ -29,19 +32,42 @@ function App() {
       <Router>
        
         
-        <Navbar />
+        <NavMenu />
 
         <Routes>
-          <Route exact path='/' element={<DashBoard />} />
-          <Route exact path="/addproduct" element={<AddProduct handleAddProduct={product =>SendProducts(product)}  />} />
-          <Route exact path="/editProduct/:id" element={<EditProduct/>}/>
+          <Route exact path='/dashboard'
+           element={<DashBoard
+                   setSuccessMessage={setSuccessMessage} 
+                   successMessage={successMessage}
+                   setEditMessage={setEditMessage}
+                   editMessage={editMessage}
+                   setDeleteMessage={setDeleteMessage}
+                   deleteMessage={deleteMessage}
+                   />} />
+  
+          <Route exact path="/addproduct" element={<AddProduct setSuccessMessage={setSuccessMessage} handleAddProduct={product =>SendProducts(product)}  />} />
+          <Route exact path="/editProduct/:id" element={<EditProduct setEditMessage={setEditMessage} />}/>
           <Route exact path="/viewProduct/:id" element={<ViewProduct/>}/>
           
-          <Route exact path="/addCategory" element={<AddCategory show={show} setShow={setShow} />} />
+          {/* <Route exact path="/viewCategory/:id" element={<ViewProduct/>}/> */}
+
+          
+          <Route exact path="/addCategory" 
+          element={
+           <AddCategory 
+            show={show} 
+            setShow={setShow} 
+            setDeleteMessage={setDeleteMessage}
+            deleteMessage={deleteMessage}  
+            setSuccessMessage={setSuccessMessage} 
+            successMessage={successMessage}
+            setEditMessage={setEditMessage}
+            editMessage={editMessage}
+            />} />
+          
           <Route exact path="/editCategory/:id" element={<EditCategory show={show} setShow={setShow}/>}/>
           
         </Routes>
-
       </Router>
     </div>
 

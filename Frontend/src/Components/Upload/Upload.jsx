@@ -21,7 +21,7 @@ const Upload = ({ onImageUpload }) => {
             reader.onloadend = async () => {
                 const imageData = reader.result;
 
-                //console.log(imageData);
+                console.log(imageData);
 
                 try {
                     const response = await axios.post(
@@ -51,7 +51,7 @@ const Upload = ({ onImageUpload }) => {
         <div>
             <input
                 type="file"
-                className="mb-5"
+                className="mb-4"
                 onChange={handleFileChange}
                 accept="image/*" />
 

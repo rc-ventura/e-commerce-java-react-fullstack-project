@@ -1,31 +1,35 @@
-import {useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Upload from '../Components/Upload/Upload';
-import { useFetchCategories } from '../hooks/useFetchCategories';
-import { useAddProducts } from '../hooks/useAddProducts';
+import { useFetchCategories } from '../Hooks/useFetchCategories';
+import { useAddProducts } from '../Hooks/useAddProducts';
+import SnackBar from '../Components/Alerts/SnackBar';
+import  './Product.css'
 
-const AddProduct = ({ handleAddProduct }) => {
-    
+const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
+
     let navigate = useNavigate();
 
-    
-    const [formError, setFormError] = useState("");
+    const [isImageAdded, setIsImageAdded] = useState(false)
+    const [errorUpload, setErrorUpload] = useState(false);
+    const [isError, setIsError] = useState(false);
 
-    const {categories, loadCategories, error, loading, } = useFetchCategories()
-    
-    const {nome,setNome,
-           preco,setPreco,
-           qtd,setQtd, insertProduct,
-           setCategorySelected,
-           setFileStorage,
-           setIsImageAdded} = useAddProducts()
+    const { categories, loadCategories } = useFetchCategories()
+
+    const { nome, setNome,
+        preco, setPreco, loading,
+        qtd, setQtd, insertProduct,
+        setCategorySelected,
+        setFileStorage, error,
+    } = useAddProducts()
 
 
     useEffect(() => {
-        
+
         loadCategories()
+
     }, []);
-    
+
 
     const handleImageUpload = (imageData) => {
         setFileStorage(imageData);
@@ -34,32 +38,32 @@ const AddProduct = ({ handleAddProduct }) => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        setFormError('')
 
-        try {
-            const productResponse = await insertProduct()
+        if (!isImageAdded) {
+            setErrorUpload('Please, upload an image!')
+            setIsError(true)
 
-            if (productResponse !== undefined) {
-                handleAddProduct(productResponse);
-                navigate('/')
+        } else {
+
+            setSuccessMessage(true)
+
+            const responseProduct = await insertProduct()
+
+            handleAddProduct(responseProduct)
+
+            navigate('/')
         }
-    } catch (error) {
-
-            setFormError('Error submiting product, please try later')
-        
-        }       
-    };
-
+    }
 
     return (
-        <div className='container text-center'>
-            <div className='row'>
+        <div className='container d-flex justify-content-center aligh-items-center vh-80'>
+            {/* <div className='row'> */}
                 <div className='col-md-6 offset md-3 border rounded p-1 mt-2 shadow'>
                     <h2 className='text-center m-3'> Register Product</h2>
                     <br />
 
                     <form onSubmit={onSubmit}>
-                        <div className='mb-2'>
+                        <div className='mb-3'>
                             <label htmlFor='name' className='form-label'>
                                 <strong>Name</strong>
                             </label>
@@ -73,7 +77,7 @@ const AddProduct = ({ handleAddProduct }) => {
                                 onChange={(e) => setNome(e.target.value)}
                             />
                         </div>
-                        <div className='mb-2'>
+                        <div className='mb-3'>
                             <label htmlFor='price' className='form-label'>
                                 <strong>Price</strong>
                             </label>
@@ -87,7 +91,7 @@ const AddProduct = ({ handleAddProduct }) => {
                                 onChange={(e) => setPreco(e.target.value)}
                             />
                         </div>
-                        <div className='mb-2'>
+                        <div className='mb-1'>
                             <label htmlFor='qtd' className='form-label'>
                                 <strong>Quantity</strong>
                             </label>
@@ -128,38 +132,47 @@ const AddProduct = ({ handleAddProduct }) => {
                                 ))}
                             </select>
                         </div>
-
+                        
                         <Upload onImageUpload={handleImageUpload} />
-                       
-                        {!loading && 
-                        (<button type='submit' className='btn btn-outline-primary'>
-                            Submit
-                        </button>) }
-                        
-                        {loading && 
-                        (<button disabled type='submit' className='btn btn-outline-primary'>
-                            Wait...
-                        </button>) }
-                        
-                        <Link className='btn btn-outline-danger mx-2' to='/'>
+
+                        <div className= 'd-flex justify-content-between '>
+                        {!loading &&
+                            (<button className='btn btn-outline-primary py-2 btn-small  '>
+                                Submit
+                            </button>)}
+
+                        {loading &&
+                            (<button className='btn btn-outline-primary py-2 btn-small' disabled >
+                                Wait...
+                            </button>)}
+                            
+
+                        {!loading && (<Link className='btn btn-outline-danger  py-2 btn-small' to='/'>
                             Cancel
-                        </Link>
-                        
+                        </Link>)}
+
+                         </div> 
+
                         {error && (
-                             <div className='alert alert-danger' role='alert'> 
-                            {error}
-                        </div>
+                            <SnackBar message='danger'>{error}</SnackBar>
                         )}
-                       
-                        {formError && 
-                        (  <div className='alert alert-danger' role='alert'> 
-                            {formError}
-                        </div>) }
+
+                        {isError &&
+                            (<SnackBar handleErrorUpload={setIsError} message='danger'>{errorUpload}</SnackBar>
+                            )}
+
+
                     </form>
+
                 </div>
+
             </div>
-        </div>
+
+        // </div>
+
+
     );
+
 };
 
 export default AddProduct;

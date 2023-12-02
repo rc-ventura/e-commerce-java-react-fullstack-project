@@ -5,7 +5,9 @@ import axios from "axios";
 export const useFetchCategories = (id) => {
 
     const [categories, setCategories] = useState([]);
-    const [category, setCategory] = useState('')
+    const [category, setCategory] = useState({
+        nome: '',
+    })
 
     const [currentCategory, setCurrentCategory] = useState({
 

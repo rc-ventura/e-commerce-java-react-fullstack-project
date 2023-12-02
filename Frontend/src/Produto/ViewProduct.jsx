@@ -1,7 +1,7 @@
 import './Product.css'
 import  { Link, useParams} from "react-router-dom";
 import { useEffect } from 'react';
-import { useFetchProducts } from '../hooks/useFetchProducts';
+import { useFetchProducts } from '../Hooks/useFetchProducts';
 
 
 export default function ViewProduct() {

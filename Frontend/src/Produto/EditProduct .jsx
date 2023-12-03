@@ -8,13 +8,16 @@ import { useFetchProducts } from '../Hooks/useFetchProducts';
 import { useFetchCategories } from '../Hooks/useFetchCategories';
 import { useEditProducts } from '../Hooks/useEditProducts';
 import SnackBar from '../Components/Alerts/SnackBar';
+import { useMessageContext } from '../Context/MessageContext';
 
-export default function EditProduct({setEditMessage}) {
+export default function EditProduct() {
 
 
     let navigate = useNavigate();
 
     const { id } = useParams();
+
+    const {setEditMessage} = useMessageContext()
 
 
     const [fileStorageUpdate, setFileStorageUpdate] = useState({});
@@ -77,7 +80,7 @@ export default function EditProduct({setEditMessage}) {
         const productData = createProductUpdate()
 
         await updateProduct(productData)
-        navigate('/');
+        navigate('/dashboard');
 
         } else {
 
@@ -120,14 +123,12 @@ export default function EditProduct({setEditMessage}) {
     return (
 
 
-        <div className='container text-center'>
-            <div className='row'>
-                <div className='col-md-6 offset md-3 border rounded p-4  shadow'>
+        <div className='container d-flex justify-content-center aligh-items-center vh-80'>
+                <div className='col-md-6 offset md-3 border rounded p-1   shadow'>
                     <h2 className='text-center m-2'> Edit Product</h2>
-                    <br />
                     <form onSubmit={(e) => onSubmit(e)}>
-                        <div className='mb-2'>
-                            <label htmlFor='name' className='form-label'>
+                        <div className='mb-3'>
+                            <label  className='form-label'>
                                 <strong>Name</strong>
                             </label>
                             <input type={"text"} className="form-control" placeholder='Enter with product name' name='nome'
@@ -135,8 +136,8 @@ export default function EditProduct({setEditMessage}) {
                             />
 
                         </div>
-                        <div className='mb-2'>
-                            <label htmlFor='price' className='form-label'>
+                        <div className='mb-3'>
+                            <label  className='form-label'>
                                 <strong>Price</strong>
                             </label>
                             <input type={"number"} className="form-control" placeholder='Enter with price' name='preco'
@@ -145,15 +146,14 @@ export default function EditProduct({setEditMessage}) {
 
                         </div>
                         <div className='mb-2'>
-                            <label htmlFor='qtd' className='form-label'>
+                            <label  className='form-label'>
                                 <strong>Quantity</strong>
                             </label>
                             <input type={"number"} className="form-control" placeholder='Enter with quantity' name='qtd'
                                 value={qtd} onChange={(e) => onInputChange(e)}
                             />
-                            <br></br>
-                            <div className='mb-2 '>
-                                <label htmlFor='categoria' className='form-label' >
+                            <div className='mt-3 '>
+                                <label className='form-label' >
                                     <strong>Categoria</strong>
                                 </label>
                                 <select
@@ -172,52 +172,54 @@ export default function EditProduct({setEditMessage}) {
 
                                         </option>
                                     ))
-
-
                                     }
 
                                 </select>
                             </div>
 
                         </div>
-                        <div className='mb-2'>
-                            <label htmlFor='file' className='form-label'>
-                                <strong className='bold-text'>Image:</strong>
+                        <div className=' align-items-center p-1'>
+                            <label  className='form-label py-1'>
+                                <strong >Image</strong>
 
                             </label>
-                            <span className='bold-text'>
+                            <span className=''>
 
                                 {product.fileStorage && (
                                     <img src={`data:${product.fileStorage.type};base64,${product.fileStorage.data}`}
                                         width='100'
                                         height='80'
-                                        alt='logo' />
+                                        alt='image product'
+                                        style={{ marginBottom: '.8rem' }}
+                                        className='img-fluid' />
                                 )}
                             </span>
 
-
+                                    
                             <Upload onImageUpload={handleImageUpload} />
 
-                        </div>
+                        </div >
+                        <div className= 'd-flex justify-content-between'>
                         {!loading && (
-                            <button className='btn btn-outline-primary'>
+                            <button className='btn btn-outline-primary py-2 btn-small'>
                                 Submit
                             </button>)}
                         {loading &&
-                            (<button className='btn btn-outline-primary' disabled >
+                            (<button className='btn btn-outline-primary py-2 btn-small' disabled >
                                 Wait...
                             </button>)}
                         {!loading && (
-                            <Link className='btn btn-outline-danger mx-2' to='/'>
+                            <Link className='btn btn-outline-danger py-2 btn-small mx-2' to='/dashboard'>
                                 Cancel
                             </Link>)}
                         {changeError && (
                             <SnackBar handleChangeError={setChangeError} message='warning'>{changeError}</SnackBar>
                         )}
+                        </div>
                     </form>
 
                 </div>
             </div>
-        </div>
+        // </div>
     );
 }

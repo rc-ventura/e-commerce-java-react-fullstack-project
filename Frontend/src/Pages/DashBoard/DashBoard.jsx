@@ -1,19 +1,19 @@
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useFetchProducts } from '../../Hooks/useFetchProducts';
 import { useDeleteProducts } from '../../Hooks/useDeleteProducts';
 import SnackBar from '../../Components/Alerts/SnackBar';
+import { useMessageContext } from '../../Context/MessageContext';
 
-export default function DashBoard({
-     successMessage,
-     setSuccessMessage,
-     setEditMessage,
-     editMessage,
-     deleteMessage,
-     setDeleteMessage,
+export default function DashBoard() {
 
-    }) {
-
+    const { 
+        successMessage,
+        setSuccessMessage,
+        setEditMessage,
+        editMessage,
+        deleteMessage,
+        setDeleteMessage,} = useMessageContext()
     
     const {products, loadProducts, error, loading,} = useFetchProducts()
     const {deleteProducts} = useDeleteProducts()

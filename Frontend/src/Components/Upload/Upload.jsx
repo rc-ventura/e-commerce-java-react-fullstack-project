@@ -60,12 +60,12 @@ const Upload = ({ onImageUpload }) => {
                 className="btn btn-primary mx-2"
                 onClick={handleUpload}>Upload</button>
 
-            {selectedFile && (
+            {/* {selectedFile && (
                 <img
-                    width='200'
+                    width='80'
                     src={URL.createObjectURL(selectedFile)}
                     alt="Selected" />
-            )}
+            )} */}
         </div>
     );
 };

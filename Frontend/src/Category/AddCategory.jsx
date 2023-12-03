@@ -5,20 +5,19 @@ import { useFetchCategories } from '../Hooks/useFetchCategories';
 import { useDeleteCategories } from '../Hooks/useDeleteCategories';
 import { useAddCategories } from '../Hooks/useAddCategories';
 import SnackBar from '../Components/Alerts/SnackBar';
+import { useMessageContext } from '../Context/MessageContext';
 
-export default function AddCategory({
-    setShow, 
-    setDeleteMessage, 
-    deleteMessage,
-    setEditMessage,
-    editMessage,
-    successMessage,
-    setSuccessMessage
-
-    }) {
+export default function AddCategory({setShow}) {
 
     let navigate = useNavigate()
 
+    const { 
+        setDeleteMessage, 
+        deleteMessage,
+        setEditMessage,
+        editMessage,
+        successMessage,
+        setSuccessMessage} = useMessageContext()
 
     const {categories,
           error,loading, loadCategories,

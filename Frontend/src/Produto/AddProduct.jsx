@@ -51,7 +51,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
 
             handleAddProduct(responseProduct)
 
-            navigate('/')
+            navigate('/dashboard')
         }
     }
 
@@ -59,7 +59,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
         <div className='container d-flex justify-content-center aligh-items-center vh-80'>
             {/* <div className='row'> */}
                 <div className='col-md-6 offset md-3 border rounded p-1 mt-2 shadow'>
-                    <h2 className='text-center m-3'> Register Product</h2>
+                    <h2 className='text-center m-2'> Register Product</h2>
                     <br />
 
                     <form onSubmit={onSubmit}>
@@ -107,7 +107,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
                             <br></br>
                         </div>
                         <div className='mb-5 '>
-                            <label htmlFor='categoria' className='form-label'>
+                            <label  className='form-label'>
                                 <strong>Categories</strong>
                             </label>
                             <select
@@ -147,7 +147,7 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
                             </button>)}
                             
 
-                        {!loading && (<Link className='btn btn-outline-danger  py-2 btn-small' to='/'>
+                        {!loading && (<Link className='btn btn-outline-danger mx-2  py-2 btn-small' to='/dashboard'>
                             Cancel
                         </Link>)}
 

@@ -13,7 +13,7 @@ export const useAddCategories = () => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     
-
+    
     function checkIfIsCancelled() {
         if (cancelled) {
             return;
@@ -29,6 +29,7 @@ export const useAddCategories = () => {
         try{
 
         const categoryResponse = await axios.post("http://localhost:8080/categorias/", category)
+        await loadCategories();
 
         return categoryResponse
 
@@ -46,11 +47,13 @@ useEffect(() => {
     return () => setCancelled(true);
 }, []);
 
+
+
 useEffect(() => {
     loadCategories();
 
 
-}, []);
+}, [loadCategories]);
 
 
 

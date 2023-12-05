@@ -1,4 +1,4 @@
-import {useContext, useEffect} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { useFetchProducts } from '../../Hooks/useFetchProducts';
 import { useDeleteProducts } from '../../Hooks/useDeleteProducts';
@@ -15,13 +15,21 @@ export default function DashBoard() {
         deleteMessage,
         setDeleteMessage,} = useMessageContext()
     
-    const {products, loadProducts, error, loading,} = useFetchProducts()
-    const {deleteProducts} = useDeleteProducts()
+    const {
+        products,
+        loadProducts, 
+        error, 
+        loading,} = useFetchProducts()
     
+        const {deleteProducts} = useDeleteProducts()
     
+    const fetchProducts = useCallback(async () => {
+        await loadProducts()
+    },[])
+
     useEffect(()=> {
-      
-        loadProducts()
+       
+        fetchProducts()
 
     }, [])
 

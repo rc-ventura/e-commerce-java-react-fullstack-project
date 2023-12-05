@@ -5,10 +5,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 //pages
-import EditProduct from "./Produto/EditProduct ";
-import ViewProduct from "./Produto/ViewProduct";
+import EditProduct from "./Product/EditProduct ";
+import ViewProduct from "./Product/ViewProduct";
 import AddCategory from "./Category/AddCategory";
-import AddProduct from "./Produto/AddProduct";
+import AddProduct from "./Product/AddProduct";
 import EditCategory from "./Category/EditCategory";
 import DashBoard from "./Pages/DashBoard/DashBoard";
 import Home from "./Pages/Home/Home";
@@ -42,8 +42,10 @@ function App() {
         <Router>
 
           <NavMenu />
-
+          
           <Routes>
+            <Route exact path="/home" element={<Home />}/>
+
             <Route exact path='/dashboard'
               element={<DashBoard
 

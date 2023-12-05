@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useState } from 'react'
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useEffect } from 'react';
@@ -42,12 +42,11 @@ export default function EditProduct() {
 
         loadProductsId();
         loadCategories();
-    },
-
-        []);
+        
+    },[id]);
 
     const createProductUpdate = () => {
-
+    
         const productDataUpdate = {
             nome,
             preco,

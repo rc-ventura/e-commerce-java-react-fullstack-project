@@ -68,7 +68,9 @@ export const useFetchProducts = (id) => {
 
     }
 
-   
+    useEffect(() => {
+        loadProducts();
+    }, []);
     
 
     useEffect(() => {

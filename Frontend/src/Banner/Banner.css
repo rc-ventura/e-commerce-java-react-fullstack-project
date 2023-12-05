@@ -1,0 +1,8 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Ou qualquer outro alinhamento que você preferir */
+  }
+  
+  /* Adicione estilos adicionais conforme necessário */
+  

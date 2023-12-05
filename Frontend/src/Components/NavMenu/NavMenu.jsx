@@ -13,7 +13,7 @@ export default function NavMenu() {
   return (
 
     <div>
-     <Navbar bg="dark"  data-bs-theme="dark"  expand='xxl' className="bg-body-tertiary mb-3" >
+     <Navbar bg="dark"  data-bs-theme="dark"   expand='xxl' className="bg-body-tertiary mb-3" >
           <Container fluid>
             
             <Navbar.Brand  href="/home">

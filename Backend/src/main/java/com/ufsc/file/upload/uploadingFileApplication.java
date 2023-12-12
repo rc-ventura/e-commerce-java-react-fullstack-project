@@ -1,7 +1,8 @@
 package com.ufsc.file.upload;
 
 import com.ufsc.file.upload.services.FileStorageService;
-import com.ufsc.file.upload.util.StorageProperties;
+import com.ufsc.file.upload.util.properties.StorageProperties;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

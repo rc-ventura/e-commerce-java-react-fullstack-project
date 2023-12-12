@@ -1,7 +1,6 @@
 package com.ufsc.file.upload.controllers;
 
 import com.ufsc.file.upload.models.Produto;
-import com.ufsc.file.upload.services.FileStorageService;
 import com.ufsc.file.upload.services.imp.ProdutoImp;
 import java.net.URI;
 import java.util.List;

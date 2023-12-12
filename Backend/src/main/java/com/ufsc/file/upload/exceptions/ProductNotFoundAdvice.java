@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ProductNotFoundAdvice {
     
     @ResponseBody
-    @ExceptionHandler(ProductNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public Map <String, String> exceptionHandler(ProductNotFoundException e){
+    public Map <String, String> exceptionHandler(EntityNotFoundException e){
         
         Map <String,String> errorMap = new HashMap();
                 errorMap.put("errorMessage", e.getMessage());

@@ -2,12 +2,7 @@
 package com.ufsc.file.upload.services;
 
 import com.ufsc.file.upload.models.FileStorage;
-import com.ufsc.file.upload.models.Produto;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.stream.Stream;
-import javax.annotation.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

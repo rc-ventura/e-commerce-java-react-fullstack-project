@@ -2,7 +2,6 @@
 package com.ufsc.file.upload.services.imp;
 
 import com.ufsc.file.upload.models.Categoria;
-import com.ufsc.file.upload.models.FileStorage;
 import com.ufsc.file.upload.models.Produto;
 import com.ufsc.file.upload.repositories.CategoriaRepository;
 import com.ufsc.file.upload.repositories.ProdutoRepository;

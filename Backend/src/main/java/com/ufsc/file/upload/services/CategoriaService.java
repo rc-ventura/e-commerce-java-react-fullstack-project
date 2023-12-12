@@ -3,7 +3,6 @@ package com.ufsc.file.upload.services;
 
 import com.ufsc.file.upload.models.Categoria;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 /**
  *

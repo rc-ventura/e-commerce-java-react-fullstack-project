@@ -1,13 +1,12 @@
 package com.ufsc.file.upload.services.imp;
 
-import com.ufsc.file.upload.exceptions.ProductNotFoundException;
+import com.ufsc.file.upload.exceptions.EntityNotFoundException;
 import com.ufsc.file.upload.models.FileStorage;
 import com.ufsc.file.upload.models.Produto;
 import com.ufsc.file.upload.repositories.FileStorageRepository;
 import com.ufsc.file.upload.repositories.ProdutoRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class ProdutoImp {
 		
 		return produtoRepository.save(produtoEntity);		
 	}catch (Exception e){
-            throw new ProductNotFoundException(id);
+            throw new EntityNotFoundException(id);
         }
         }
 
@@ -46,7 +45,7 @@ public class ProdutoImp {
 	
 	public void deleteById(Long id) {
             if(!produtoRepository.existsById(id)){
-            throw new ProductNotFoundException(id);
+            throw new EntityNotFoundException(id);
         }
             produtoRepository.deleteById(id);
 	}
@@ -65,7 +64,7 @@ public class ProdutoImp {
 		try {
 			return produtoRepository.findById(id).get();
 		} catch(NoSuchElementException e) {
-			throw new ProductNotFoundException(id);
+			throw new EntityNotFoundException(id);
 		}
 	}
 

@@ -41,18 +41,18 @@ public class UserController {
     
         
         
-	@PutMapping(value = "/users/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
-		User updateUser = userImp.update(id, user);
-		return ResponseEntity.ok().body(updateUser);
-	}
+	// @PutMapping(value = "/users/{id}")
+	// public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
+	// 	User updateUser = userImp.update(id, user);
+	// 	return ResponseEntity.ok().body(updateUser);
+	// }
 	
 	
-	@DeleteMapping(value = "/users/{id}")
-	public ResponseEntity<Void> deleteById(@PathVariable Long id){
-		userImp.deleteById(id);
-		return ResponseEntity.noContent().build();
-	}
+	// @DeleteMapping(value = "/users/{id}")
+	// public ResponseEntity<Void> deleteById(@PathVariable Long id){
+	// 	userImp.deleteById(id);
+	// 	return ResponseEntity.noContent().build();
+	// }
 
 	@PostMapping(value = "/users")
 	public ResponseEntity<User> save (@RequestBody User user) {
@@ -75,13 +75,13 @@ public class UserController {
 		return ResponseEntity.ok().body(users);		
 	 }
 	
-	@GetMapping(value = "/users/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id){
+	// @GetMapping(value = "/users/{id}")
+	// public ResponseEntity<User> findById(@PathVariable Long id){
 		
-		User user = userImp.findById(id);
-		return ResponseEntity.ok().body(user);		
+	// 	User user = userImp.findById(id);
+	// 	return ResponseEntity.ok().body(user);		
 		
-	}
+	// }
 	
 	
 }

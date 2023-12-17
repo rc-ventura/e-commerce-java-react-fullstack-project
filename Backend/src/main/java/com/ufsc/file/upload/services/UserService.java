@@ -19,7 +19,7 @@ public interface UserService {
 	public User update(Long id, User user) ;
 		
      
-	public String deleteById(Long id) ;
+	public String deleteById(String id) ;
            
     
 	public Produto save(User user) ;
@@ -27,7 +27,7 @@ public interface UserService {
 	
 	public List<User> findAll();
 
-    public UserDetails findByLogin(String username);
+    //public UserDetails findByLogin(String username);
 	
 
 	public User findById(Long id) ;		

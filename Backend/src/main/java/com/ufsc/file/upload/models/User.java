@@ -3,47 +3,75 @@ package com.ufsc.file.upload.models;
 import java.util.Collection;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 
 @Table(name = "users")
-@Entity(name = "User")
+@Entity(name = "user")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue (strategy = GenerationType.UUID)
+    private String id;
 
-    private String fullName;
+    private String firstName;
+    private String lastName;
     private String login;
     private String password;
+   
+    private Role role;
 
     public User(){};
 
-    public User(Long id, String fullName, String login, String password) {
+    public User(String id, String firstName, String lastName, String login, String password, Role role) {
         this.id = id;
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.login = login;
         this.password = password;
     }
 
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
     
+    public User(String login, String password, Role role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String firstName) {
+         this.firstName = firstName;
+
+    }
+
+     public String getLogin() {
+        return login;
+    }
+
     
 
     @Override
@@ -73,7 +101,11 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role == Role.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), 
+        new SimpleGrantedAuthority("ROLE_USER"));
+    
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+     
     }
 
     @Override
@@ -101,10 +133,21 @@ public class User implements UserDetails {
        return true;
     }
 
+    
+
     @Override
     public String getPassword() {
         return password;
     }
+
+   
+ 
+
+    
+
+}
+
+   
 
    
 
@@ -114,4 +157,4 @@ public class User implements UserDetails {
 
     
     
-}
+

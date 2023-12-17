@@ -3,6 +3,7 @@ package com.ufsc.file.upload.util.setup;
 
 import com.ufsc.file.upload.models.Categoria;
 import com.ufsc.file.upload.models.Produto;
+import com.ufsc.file.upload.models.Role;
 import com.ufsc.file.upload.models.User;
 import com.ufsc.file.upload.repositories.CategoriaRepository;
 import com.ufsc.file.upload.repositories.ProdutoRepository;
@@ -38,11 +39,11 @@ public class Setup implements CommandLineRunner{
     public void run(String...args) throws Exception{
        
         
-       User u1 = new User (null, "Rafael Ventura", "rafael.ventura@hotmail.com", "$2y$10$11ueOV3xzEGhPtivz1aMju2UH4ezSCSNGtDQ6fIkzWGKU61l28aWS");
-       User u2 = new User (null, "Daniel Ventura", "daniel.ventura@hotmail.com", "1234mudar" );
-       User u3 = new User (null, "Laura Bender", "laura.bender@hotmail.com", "1234mudar" );
-       User u4 = new User (null, "Rita De Cassia", "rita.cassia@hotmail.com", "1234mudar" );
-       User u5 = new User (null, "João Antônio", "joao.antonio@hotmail.com", "1234mudar" );
+       User u1 = new User (null, "Rafael", "Ventura", "rafael.ventura@hotmail.com", "$2y$10$11ueOV3xzEGhPtivz1aMju2UH4ezSCSNGtDQ6fIkzWGKU61l28aWS", Role.ADMIN );
+       User u2 = new User (null, "Daniel ", "Ventura", "daniel.ventura@hotmail.com", "1234mudar", Role.USER );
+       User u3 = new User (null, "Laura ", "Bender", "laura.bender@hotmail.com", "1234mudar", Role.USER );
+       User u4 = new User (null, "Rita ", "De Cassia","rita.cassia@hotmail.com", "1234mudar", Role.USER );
+       User u5 = new User (null, "João ", "Antônio", "joao.antonio@hotmail.com", "1234mudar", Role.USER );
        
        
         userRepository.saveAll(Arrays.asList(u1,u2,u3,u4,u5)); //salvando tudo

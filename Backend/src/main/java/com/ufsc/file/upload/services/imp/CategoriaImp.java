@@ -1,6 +1,7 @@
 
 package com.ufsc.file.upload.services.imp;
 
+import com.ufsc.file.upload.exceptions.EntityNotFoundException;
 import com.ufsc.file.upload.models.Categoria;
 import com.ufsc.file.upload.models.Produto;
 import com.ufsc.file.upload.repositories.CategoriaRepository;
@@ -8,7 +9,6 @@ import com.ufsc.file.upload.repositories.ProdutoRepository;
 import com.ufsc.file.upload.services.CategoriaService;
 import java.util.List;
 import java.util.NoSuchElementException;
-import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +57,7 @@ public class CategoriaImp implements CategoriaService {
 		try {
 			return categoriaRepository.findById(id).get();
 		} catch(NoSuchElementException e) {
-			throw new EntityNotFoundException("EntityNotFoundException Categoria id: " + id);
+			throw new EntityNotFoundException(id);
 		}
 	}
 

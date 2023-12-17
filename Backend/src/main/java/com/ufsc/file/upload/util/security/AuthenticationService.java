@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.ufsc.file.upload.repositories.UserRepository;
-import com.ufsc.file.upload.services.imp.UserImp;
 
 @Service
 public class AuthenticationService implements UserDetailsService {

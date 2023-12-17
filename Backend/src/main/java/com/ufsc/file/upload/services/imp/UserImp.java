@@ -26,30 +26,31 @@ public class UserImp {
        
 	
         
-	public User update(Long id, User User) {
-		try{
-                    User UserEntity = userRepository.getReferenceById(id);
+	// public User update(String id, User User) {
+	// 	try{
+    //                 User UserEntity = userRepository.getReferenceById(id);
         
 		
-		UserEntity.setfullName(User.getfullName());
-		UserEntity.setLogin(User.getLogin());
-		UserEntity.setPassword(User.getPassword());
+	// 	UserEntity.setFirstName(User.getFirstName());
+	// 	UserEntity.setLastName(User.getLastName());
+	// 	UserEntity.setLogin(User.getLogin());
+	// 	UserEntity.setPassword(User.getPassword());
         
         
-		return userRepository.save(UserEntity);		
-	}catch (Exception e){
-        throw new RuntimeException(e.getMessage(), e);
-        }
-        }
+	// 	return userRepository.save(UserEntity);		
+	// }catch (Exception e){
+    //     throw new RuntimeException(e.getMessage(), e);
+    //     }
+    //     }
 
 	
 	
-	public void deleteById(Long id) {
-            if(!userRepository.existsById(id)){
-            throw new EntityNotFoundException(id);
-        }
-            userRepository.deleteById(id);
-	}
+	// public void deleteById(Long id) {
+    //         if(!userRepository.existsById(id)){
+    //         throw new EntityNotFoundException(id);
+    //     }
+    //         userRepository.deleteById(id);
+	// }
 	
 	// public UserDTO create(User user) {
     //     UserDTO userDTO = new UserDTO();
@@ -67,14 +68,14 @@ public class UserImp {
 		return userRepository.findAll();
 	}
 
-	public User findById(Long id) {		
-		try {
-			return userRepository.findById(id).get();
+	// public User findById(Long id) {		
+	// 	try {
+	// 		return userRepository.findById(id).get();
 		
-        } catch(NoSuchElementException e) {
-			throw new EntityNotFoundException(id);
-		}
-	}
+    //     } catch(NoSuchElementException e) {
+	// 		throw new EntityNotFoundException(id);
+	// 	}
+	// }
 
 // public UserDetails findByLogin (String login) {
 

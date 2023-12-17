@@ -3,13 +3,14 @@ package com.ufsc.file.upload.models;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
+
 
 /**
  *
@@ -19,8 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class FileStorage  {
 
   @Id
-  @GeneratedValue (generator = "uuid")
-  @GenericGenerator(name= "uuid", strategy = "uuid2")
+  @GeneratedValue (strategy = GenerationType.UUID )
   private String id;
   
   private String name; 

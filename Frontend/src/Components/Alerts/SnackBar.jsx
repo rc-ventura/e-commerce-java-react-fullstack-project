@@ -5,9 +5,13 @@ function SnackBar({
   children, 
   handleSuccessMessage, 
   handleErrorUpload,
+  handleErrorSubmit,
   handleEditMessage,
   handleChangeError,
-  handleDeleteMessage
+  handleDeleteMessage,
+  handleUploadSuccess,
+  handleUploadAlert,
+  handleUploadError,
 
   }) {
 
@@ -29,6 +33,22 @@ function SnackBar({
 
       if (typeof handleDeleteMessage === 'function') {
         handleDeleteMessage(false);
+      }
+
+      if (typeof handleUploadSuccess === 'function') {
+        handleUploadSuccess(false);
+      }
+
+      if (typeof handleUploadAlert === 'function') {
+        handleUploadAlert(false);
+      }
+
+      if (typeof handleUploadError === 'function') {
+        handleUploadError(false);
+      }
+
+      if (typeof handleErrorSubmit === 'function') {
+        handleErrorSubmit(false);
       }
     };
 

@@ -3,7 +3,7 @@ import CardCategory from '../../Components/CardCategory/CardCategory'
 import Footer from '../../Components/Footer/Footer'
 import HeaderCarousel from '../../Components/HeaderCarousel/HeaderCarousel'
 import MultiCarousel from '../../Components/MultiCarousel/MultiCarousel'
-import Banner from '../../Banner/Banner'
+import Banner from '../../Components/Banner/Banner'
 
 function Home() {
   return (

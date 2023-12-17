@@ -5,8 +5,9 @@ import { useFetchCategories } from '../Hooks/useFetchCategories';
 import { useAddProducts } from '../Hooks/useAddProducts';
 import SnackBar from '../Components/Alerts/SnackBar';
 import  './Product.css'
+import { useMessageContext } from '../Context/MessageContext';
 
-const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
+const AddProduct = ({ handleAddProduct }) => {
 
     let navigate = useNavigate();
 
@@ -20,8 +21,10 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
         preco, setPreco, loading,
         qtd, setQtd, insertProduct,
         setCategorySelected,
-        setFileStorage, error,
+        setFileStorage,
     } = useAddProducts()
+
+    const {setSuccessMessage} = useMessageContext()
 
 
     useEffect(() => {
@@ -40,24 +43,27 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
         e.preventDefault();
 
         if (!isImageAdded) {
-            setErrorUpload('Please, upload an image!')
-            setIsError(true)
-
+            setErrorUpload('Please upload an image')
+       
         } else {
 
-            setSuccessMessage(true)
+            try{
 
             const responseProduct = await insertProduct()
 
             handleAddProduct(responseProduct)
+            setSuccessMessage(true)
 
             navigate('/dashboard')
+
+        } catch (error) {
+                setIsError(error)
         }
     }
+}
 
     return (
         <div className='container d-flex justify-content-center aligh-items-center vh-80'>
-            {/* <div className='row'> */}
                 <div className='col-md-6 offset md-3 border rounded p-1 mt-2 shadow'>
                     <h2 className='text-center m-2'> Register Product</h2>
                     <br />
@@ -153,14 +159,13 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
 
                          </div> 
 
-                        {error && (
-                            <SnackBar message='danger'>{error}</SnackBar>
+                        {errorUpload && (
+                            <SnackBar handleErrorUpload={setErrorUpload} message='danger'>{errorUpload}</SnackBar>
                         )}
 
                         {isError &&
-                            (<SnackBar handleErrorUpload={setIsError} message='danger'>{errorUpload}</SnackBar>
+                            (<SnackBar handleErrorSubmit={setIsError} message='danger'>{isError}</SnackBar>
                             )}
-
 
                     </form>
 
@@ -168,11 +173,13 @@ const AddProduct = ({ handleAddProduct, setSuccessMessage }) => {
 
             </div>
 
-        // </div>
 
 
     );
+            
 
 };
+
+
 
 export default AddProduct;

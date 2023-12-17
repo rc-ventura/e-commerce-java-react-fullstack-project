@@ -1,14 +1,18 @@
 import { useState } from "react";
 import axios from 'axios';
+import SnackBar from "../Alerts/SnackBar";
 
 const Upload = ({ onImageUpload }) => {
 
     const [selectedFile, setSelectedFile] = useState(null);
+    const [errorUpload, setErrorUpload] = useState(null)
+    const [alertUpload, setAlertUpload] = useState(null)
+    const [successUpload, setSucessUpload] = useState(null)
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedFile(file);
-        console.log(file);
     };
 
     const handleUpload = async () => {
@@ -19,9 +23,7 @@ const Upload = ({ onImageUpload }) => {
             formData.append('file', selectedFile);
 
             reader.onloadend = async () => {
-                const imageData = reader.result;
 
-                console.log(imageData);
 
                 try {
                     const response = await axios.post(
@@ -33,19 +35,24 @@ const Upload = ({ onImageUpload }) => {
                             },
                         }
                     );
-                    alert('Upload Success')
-                    console.log(response.data);
+                    
+                    setSucessUpload('Upload image success')
 
                     onImageUpload(response.data);
-
+                 
                 } catch (error) {
-                    console.error('Error submitted upload', error);
-                }
-            };
 
+                    setErrorUpload('Error submitted upload')
+                }
+            } 
             reader.readAsDataURL(selectedFile);
+
+            } else {
+                 setAlertUpload('Attention, upload an image')
+            }
+
         }
-    };
+    
 
     return (
         <div>
@@ -66,7 +73,17 @@ const Upload = ({ onImageUpload }) => {
                     src={URL.createObjectURL(selectedFile)}
                     alt="Selected" />
             )} */}
+             {errorUpload && (
+            <SnackBar handleUploadError={setErrorUpload} message='danger'>{errorUpload}</SnackBar>
+        )}
+        {alertUpload && (
+            <SnackBar handleUploadAlert={setAlertUpload} message='warning'>{alertUpload}</SnackBar>
+        )}
+        {successUpload && (
+            <SnackBar handleUploadSuccess={setSucessUpload} message='success'>{successUpload}</SnackBar>
+        )}
         </div>
+       
     );
 };
 

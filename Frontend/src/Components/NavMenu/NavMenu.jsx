@@ -62,7 +62,8 @@ export default function NavMenu() {
                 
                 
                 <Nav className="justify-content-end flex-grow-1 pe-5">
-                  
+                <h2>Ventura</h2>
+
                   <Nav.Link href="/home">Home</Nav.Link>
                   <Nav.Link href="#action2">Login</Nav.Link>
                   <Nav.Link href="#action2">Register</Nav.Link>

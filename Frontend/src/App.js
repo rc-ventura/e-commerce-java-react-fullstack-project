@@ -15,7 +15,6 @@ import Home from "./Pages/Home/Home";
 
 //components
 import NavMenu from "./Components/NavMenu/NavMenu";
-import Footer from "./Components/Footer/Footer";
 
 //context
 import { MessageContextProvider } from "./Context/MessageContext";
